@@ -207,11 +207,11 @@ class TaskList extends VBox {
 class Footer extends HBox {
 
     private Button addButton;
-    private Button clearButton;
+    //private Button clearButton;
     // TODO: Add a button called "loadButton" to load tasks from file
     // TODO: Add a button called "saveButton" to save tasks to a file
     // TODO: Add a button called "sortButton" to sort the tasks lexicographically
-    private Button loadButton;
+    //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
 
@@ -224,29 +224,32 @@ class Footer extends HBox {
         // set a default style for buttons - background color, font size, italics
         String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF;  -fx-font-weight: bold; -fx-font: 11 arial;";
 
-        addButton = new Button("Add Task"); // text displayed on add button
+        addButton = new Button("Add Contact"); // text displayed on add button
         addButton.setStyle(defaultButtonStyle); // styling the button
+        /* 
         clearButton = new Button("Clear finished"); // text displayed on clear tasks button
         clearButton.setStyle(defaultButtonStyle);
-
-        this.getChildren().addAll(addButton, clearButton); // adding buttons to footer
+        */
+        this.getChildren().addAll(addButton); // adding buttons to footer
         this.setAlignment(Pos.CENTER); // aligning the buttons to center
 
         // TODO: Create loadButton, saveButton and sortButton to the footer
+        /* 
         loadButton = new Button("Load Tasks");
         loadButton.setStyle(defaultButtonStyle);
-        saveButton = new Button("Save Tasks");
+        */
+        saveButton = new Button("Save Contacts");
         saveButton.setStyle(defaultButtonStyle);
-        sortButton = new Button("Sort Tasks (By Name)");
+        sortButton = new Button("Sort Contacts (By Name)");
         sortButton.setStyle(defaultButtonStyle);
-        this.getChildren().addAll(loadButton, saveButton, sortButton);
+        this.getChildren().addAll(saveButton, sortButton);
         this.setAlignment(Pos.CENTER);
     }
 
     public Button getAddButton() {
         return addButton;
     }
-
+    /* 
     public Button getClearButton() {
         return clearButton;
     }
@@ -254,7 +257,7 @@ class Footer extends HBox {
     public Button getLoadButton() {
         return loadButton;
     }
-
+    */
     public Button getSaveButton() {
         return saveButton;
     }
@@ -272,7 +275,7 @@ class Header extends HBox {
         this.setPrefSize(500, 60); // Size of the header
         this.setStyle("-fx-background-color: #F0F8FF;");
 
-        Text titleText = new Text("To Do List"); // Text of the Header
+        Text titleText = new Text("CONTACTS"); // Text of the Header
         titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
         this.getChildren().add(titleText);
         this.setAlignment(Pos.CENTER); // Align the text to the Center
@@ -286,8 +289,8 @@ class AppFrame extends BorderPane{
     private TaskList taskList;
 
     private Button addButton;
-    private Button clearButton;
-    private Button loadButton;
+    //private Button clearButton;
+    //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
 
@@ -319,8 +322,8 @@ class AppFrame extends BorderPane{
 
         // Initialise Button Variables through the getters in Footer
         addButton = footer.getAddButton();
-        clearButton = footer.getClearButton();
-        loadButton = footer.getLoadButton();
+        //clearButton = footer.getClearButton();
+        //loadButton = footer.getLoadButton();
         saveButton = footer.getSaveButton();
         sortButton = footer.getSortButton();
 
@@ -346,6 +349,7 @@ class AppFrame extends BorderPane{
         });
         
         // Clear finished tasks
+        /* 
         clearButton.setOnAction(e -> {
             taskList.removeCompletedTasks();
         });
@@ -360,7 +364,7 @@ class AppFrame extends BorderPane{
                 }
             }
         });
-
+        */
         saveButton.setOnAction(e -> {
             taskList.saveTasks();
         });
@@ -380,7 +384,7 @@ public class Main extends Application {
         AppFrame root = new AppFrame();
 
         // Set the title of the app
-        primaryStage.setTitle("To Do List");
+        primaryStage.setTitle("CONTACTS");
         // Create scene of mentioned size with the border pane
         primaryStage.setScene(new Scene(root, 500, 600));
         // Make window non-resizable
