@@ -24,7 +24,9 @@ class Task extends HBox {
 
     private Label index;
     private TextField taskName;
-    private Button doneButton;
+    private Button deleteButton;
+    private Button saveButton;
+    private Button editButton;
 
     private boolean markedDone;
 
@@ -47,17 +49,27 @@ class Task extends HBox {
         taskName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(taskName); // add textlabel to task
 
-        doneButton = new Button("Done"); // creates a button for marking the task as done
-        doneButton.setPrefSize(100, 20);
-        doneButton.setPrefHeight(Double.MAX_VALUE);
-        doneButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+        deleteButton = new Button("Delete"); // creates a button for marking the task as done
+        deleteButton.setPrefSize(100, 20);
+        deleteButton.setPrefHeight(Double.MAX_VALUE);
+        deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
-        this.getChildren().add(doneButton);
+        saveButton = new Button("Save"); // creates a button for marking the task as done
+        saveButton.setPrefSize(100, 20);
+        saveButton.setPrefHeight(Double.MAX_VALUE);
+        saveButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+
+        editButton = new Button("Edit"); // creates a button for marking the task as done
+        editButton.setPrefSize(100, 20);
+        editButton.setPrefHeight(Double.MAX_VALUE);
+        editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+
+        this.getChildren().addAll(editButton, deleteButton, saveButton);
     }
 
     public void setTaskIndex(int num) {
         this.index.setText(num + ""); // num to String
-        this.taskName.setPromptText("Task " + num);
+        this.taskName.setPromptText("Contact " + num);
     }
 
     public TextField getTaskName() {
@@ -65,7 +77,7 @@ class Task extends HBox {
     }
 
     public Button getDoneButton() {
-        return this.doneButton;
+        return this.deleteButton;
     }
 
     public boolean isMarkedDone() {
