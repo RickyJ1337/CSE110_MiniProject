@@ -24,7 +24,9 @@ class Task extends HBox {
 
     private Label index;
     private TextField taskName;
-    private Button doneButton;
+    private Button deleteButton;
+    private Button saveButton;
+    private Button editButton;
 
     private boolean markedDone;
 
@@ -47,17 +49,27 @@ class Task extends HBox {
         taskName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(taskName); // add textlabel to task
 
-        doneButton = new Button("Done"); // creates a button for marking the task as done
-        doneButton.setPrefSize(100, 20);
-        doneButton.setPrefHeight(Double.MAX_VALUE);
-        doneButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+        deleteButton = new Button("Delete"); // creates a button for marking the task as done
+        deleteButton.setPrefSize(100, 20);
+        deleteButton.setPrefHeight(Double.MAX_VALUE);
+        deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
-        this.getChildren().add(doneButton);
+        saveButton = new Button("Save"); // creates a button for marking the task as done
+        saveButton.setPrefSize(100, 20);
+        saveButton.setPrefHeight(Double.MAX_VALUE);
+        saveButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+
+        editButton = new Button("Edit"); // creates a button for marking the task as done
+        editButton.setPrefSize(100, 20);
+        editButton.setPrefHeight(Double.MAX_VALUE);
+        editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+
+        this.getChildren().addAll(editButton, deleteButton, saveButton);
     }
 
     public void setTaskIndex(int num) {
         this.index.setText(num + ""); // num to String
-        this.taskName.setPromptText("Task " + num);
+        this.taskName.setPromptText("Contact " + num);
     }
 
     public TextField getTaskName() {
@@ -65,7 +77,7 @@ class Task extends HBox {
     }
 
     public Button getDoneButton() {
-        return this.doneButton;
+        return this.deleteButton;
     }
 
     public boolean isMarkedDone() {
@@ -207,11 +219,11 @@ class TaskList extends VBox {
 class Footer extends HBox {
 
     private Button addButton;
-    private Button clearButton;
+    //private Button clearButton;
     // TODO: Add a button called "loadButton" to load tasks from file
     // TODO: Add a button called "saveButton" to save tasks to a file
     // TODO: Add a button called "sortButton" to sort the tasks lexicographically
-    private Button loadButton;
+    //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
 
@@ -224,29 +236,32 @@ class Footer extends HBox {
         // set a default style for buttons - background color, font size, italics
         String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF;  -fx-font-weight: bold; -fx-font: 11 arial;";
 
-        addButton = new Button("Add Task"); // text displayed on add button
+        addButton = new Button("Add Contact"); // text displayed on add button
         addButton.setStyle(defaultButtonStyle); // styling the button
+        /* 
         clearButton = new Button("Clear finished"); // text displayed on clear tasks button
         clearButton.setStyle(defaultButtonStyle);
-
-        this.getChildren().addAll(addButton, clearButton); // adding buttons to footer
+        */
+        this.getChildren().addAll(addButton); // adding buttons to footer
         this.setAlignment(Pos.CENTER); // aligning the buttons to center
 
         // TODO: Create loadButton, saveButton and sortButton to the footer
+        /* 
         loadButton = new Button("Load Tasks");
         loadButton.setStyle(defaultButtonStyle);
-        saveButton = new Button("Save Tasks");
+        */
+        saveButton = new Button("Save Contacts");
         saveButton.setStyle(defaultButtonStyle);
-        sortButton = new Button("Sort Tasks (By Name)");
+        sortButton = new Button("Sort Contacts (By Name)");
         sortButton.setStyle(defaultButtonStyle);
-        this.getChildren().addAll(loadButton, saveButton, sortButton);
+        this.getChildren().addAll(saveButton, sortButton);
         this.setAlignment(Pos.CENTER);
     }
 
     public Button getAddButton() {
         return addButton;
     }
-
+    /* 
     public Button getClearButton() {
         return clearButton;
     }
@@ -254,7 +269,7 @@ class Footer extends HBox {
     public Button getLoadButton() {
         return loadButton;
     }
-
+    */
     public Button getSaveButton() {
         return saveButton;
     }
@@ -272,7 +287,7 @@ class Header extends HBox {
         this.setPrefSize(500, 60); // Size of the header
         this.setStyle("-fx-background-color: #F0F8FF;");
 
-        Text titleText = new Text("To Do List"); // Text of the Header
+        Text titleText = new Text("CONTACTS"); // Text of the Header
         titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
         this.getChildren().add(titleText);
         this.setAlignment(Pos.CENTER); // Align the text to the Center
@@ -286,8 +301,8 @@ class AppFrame extends BorderPane{
     private TaskList taskList;
 
     private Button addButton;
-    private Button clearButton;
-    private Button loadButton;
+    //private Button clearButton;
+    //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
 
@@ -319,8 +334,8 @@ class AppFrame extends BorderPane{
 
         // Initialise Button Variables through the getters in Footer
         addButton = footer.getAddButton();
-        clearButton = footer.getClearButton();
-        loadButton = footer.getLoadButton();
+        //clearButton = footer.getClearButton();
+        //loadButton = footer.getLoadButton();
         saveButton = footer.getSaveButton();
         sortButton = footer.getSortButton();
 
@@ -346,6 +361,7 @@ class AppFrame extends BorderPane{
         });
         
         // Clear finished tasks
+        /* 
         clearButton.setOnAction(e -> {
             taskList.removeCompletedTasks();
         });
@@ -360,7 +376,7 @@ class AppFrame extends BorderPane{
                 }
             }
         });
-
+        */
         saveButton.setOnAction(e -> {
             taskList.saveTasks();
         });
@@ -380,7 +396,7 @@ public class Main extends Application {
         AppFrame root = new AppFrame();
 
         // Set the title of the app
-        primaryStage.setTitle("To Do List");
+        primaryStage.setTitle("CONTACTS");
         // Create scene of mentioned size with the border pane
         primaryStage.setScene(new Scene(root, 500, 600));
         // Make window non-resizable
