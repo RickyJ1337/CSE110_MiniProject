@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,6 +20,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import javafx.scene.image.ImageView;
+
+class DisplayImage extends HBox {
+
+}
 
 class Contact extends HBox {
 
@@ -27,7 +33,10 @@ class Contact extends HBox {
     private TextField contactPhoneNo;
     private TextField contactAddress;
     private Button deleteButton;
-    private Button saveButton;
+    private Button uploadButton;
+    private ImageView contactImageView;
+    private FileChooser chooseImage;
+    //private Button saveButton;
     //private Button editButton;
 
     //private boolean editing;
@@ -43,6 +52,9 @@ class Contact extends HBox {
         index.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the contact
         this.getChildren().add(index); // add index label to contact
 
+        contactImageView = new ImageView();
+        uploadButton = new Button("Upload Image");
+
         contactName = new TextField(); // create contact name text field
         //TODO: adjust size later
         contactName.setPrefSize(380, 20); // set size of text field
@@ -56,18 +68,19 @@ class Contact extends HBox {
         deleteButton.setPrefHeight(Double.MAX_VALUE);
         deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
+        /*
         saveButton = new Button("Save"); // creates a button for saving the contact info
         saveButton.setPrefSize(100, 20);
         saveButton.setPrefHeight(Double.MAX_VALUE);
         saveButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
-        /* editButton = new Button("Edit"); // creates a button for editting the contact info
+        editButton = new Button("Edit"); // creates a button for editting the contact info
         editButton.setPrefSize(100, 20);
         editButton.setPrefHeight(Double.MAX_VALUE);
         editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
         */
 
-        this.getChildren().addAll(deleteButton, saveButton); //removed edit button
+        this.getChildren().addAll(deleteButton); //removed edit button
     }
 
     public void setContactIndex(int num) {
@@ -249,7 +262,6 @@ class Footer extends HBox {
     public Button getSortButton() {
         return sortButton;
     }
-
     // TODO: Add getters for loadButton, saveButton and sortButton
 }
 
@@ -277,6 +289,8 @@ class AppFrame extends BorderPane{
     //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
+    private Button uploadButton;
+    private Button deleteButton;
 
     AppFrame()
     {
@@ -349,6 +363,16 @@ class AppFrame extends BorderPane{
         sortButton.setOnAction(e -> {
             contactList.sortTasks();
         });
+
+        /* 
+        uploadButton.setOnAction(e -> {
+            contactList.uploadImage();
+        });
+        
+        deleteButton.setOnAction(e -> {
+            contactList.deleteContact();
+        });
+        */
     }
 }
 
