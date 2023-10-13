@@ -20,7 +20,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 class DisplayImage extends HBox {
 
@@ -36,13 +38,14 @@ class Contact extends HBox {
     private Button uploadButton;
     private ImageView contactImageView;
     private FileChooser chooseImage;
+    private Stage imageStage;
     //private Button saveButton;
     //private Button editButton;
 
     //private boolean editing;
 
     Contact() {
-        this.setPrefSize(500, 20); // sets size of contact
+        this.setPrefSize(750, 50); // sets size of contact
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // sets background color of contact
 
         index = new Label();
@@ -54,6 +57,11 @@ class Contact extends HBox {
 
         contactImageView = new ImageView();
         uploadButton = new Button("Upload Image");
+        uploadButton.setPrefSize(100, 100);
+        uploadButton.setPrefHeight(Double.MAX_VALUE);
+        uploadButton.setOnAction(e -> {
+            this.uploadImage();
+        });
 
         contactName = new TextField(); // create contact name text field
         //TODO: adjust size later
@@ -92,7 +100,7 @@ class Contact extends HBox {
         editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
         */
 
-        this.getChildren().addAll(deleteButton); //removed edit button
+        this.getChildren().addAll(uploadButton, deleteButton); //removed edit button
     }
 
     public void setContactIndex(int num) {
@@ -126,6 +134,9 @@ class Contact extends HBox {
         return this.deleteButton;
     }
 
+    public Button getUploadButton() {
+        return this.uploadButton;
+    }
     /* public boolean isEditing() {
         return this.editing;
     }
@@ -153,13 +164,25 @@ class Contact extends HBox {
         
     }
     */ 
+    private void uploadImage() {
+        chooseImage.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File selectedFile = chooseImage.showOpenDialog(imageStage);
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+
+            // Resize the window to fit the image
+            contactImageView.setImage(image);
+            imageStage.setWidth(image.getWidth() + 100);
+            imageStage.setHeight(image.getHeight() + 100);
+        }
+    }
 }
 
 class ContactList extends VBox {
 
     ContactList() {
         this.setSpacing(5); // sets spacing between contacts
-        this.setPrefSize(500, 560);
+        this.setPrefSize(750, 560);
         this.setStyle("-fx-background-color: #F0F8FF;");
     }
 
@@ -245,7 +268,7 @@ class Footer extends HBox {
 
 
     Footer() {
-        this.setPrefSize(500, 60);
+        this.setPrefSize(750, 60);
         this.setStyle("-fx-background-color: #F0F8FF;");
         this.setSpacing(15);
 
@@ -298,7 +321,7 @@ class Footer extends HBox {
 class Header extends HBox {
 
     Header() {
-        this.setPrefSize(500, 60); // Size of the header
+        this.setPrefSize(750, 60); // Size of the header
         this.setStyle("-fx-background-color: #F0F8FF;");
 
         Text titleText = new Text("CONTACTS"); // Text of the Header
@@ -313,7 +336,7 @@ class AppFrame extends BorderPane{
     private Header header;
     private Footer footer;
     private ContactList contactList;
-
+    //private Contact contact;
     private Button addButton;
     //private Button clearButton;
     //private Button loadButton;
@@ -394,11 +417,11 @@ class AppFrame extends BorderPane{
             contactList.sortTasks();
         });
 
-        /* 
+        /*
         uploadButton.setOnAction(e -> {
-            contactList.uploadImage();
+            contact.uploadImage();
         });
-        
+         
         deleteButton.setOnAction(e -> {
             contactList.deleteContact();
         });
@@ -417,7 +440,7 @@ public class Main extends Application {
         // Set the title of the app
         primaryStage.setTitle("CONTACTS");
         // Create scene of mentioned size with the border pane
-        primaryStage.setScene(new Scene(root, 500, 600));
+        primaryStage.setScene(new Scene(root, 750, 600));
         // Make window non-resizable
         primaryStage.setResizable(false);
         // Show the app
