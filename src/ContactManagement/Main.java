@@ -57,14 +57,26 @@ class Contact extends HBox {
 
         contactName = new TextField(); // create contact name text field
         //TODO: adjust size later
-        contactName.setPrefSize(380, 20); // set size of text field
+        contactName.setPrefSize(100, 20); // set size of text field
         contactName.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
         index.setTextAlignment(TextAlignment.LEFT); // set alignment of text field
         contactName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(contactName); // add textlabel to contact
 
+        contactPhoneNo = new TextField();
+        contactPhoneNo.setPrefSize(100, 20);
+        contactPhoneNo.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
+        contactPhoneNo.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
+        this.getChildren().add(contactPhoneNo);
+
+        contactAddress = new TextField();
+        contactAddress.setPrefSize(100, 20);
+        contactAddress.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
+        contactAddress.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
+        this.getChildren().add(contactAddress);
+
         deleteButton = new Button("Delete"); // creates a button for deleting the contact
-        deleteButton.setPrefSize(100, 20);
+        deleteButton.setPrefSize(50, 20);
         deleteButton.setPrefHeight(Double.MAX_VALUE);
         deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
@@ -86,10 +98,28 @@ class Contact extends HBox {
     public void setContactIndex(int num) {
         this.index.setText(num + ""); // num to String
         this.contactName.setPromptText("Contact " + num);
+        this.contactPhoneNo.setPromptText("Phone No.");
+        this.contactAddress.setPromptText("Address");
+    }
+
+    public void setContactPhoneNo() {
+        this.contactPhoneNo.setPromptText("Phone No.");
+    }
+
+    public void setContactAddress() {
+        this.contactAddress.setPromptText("Address");
     }
 
     public TextField getContactName() {
         return this.contactName;
+    }
+
+    public TextField getContactPhoneNo(){
+        return this.contactPhoneNo;
+    }
+
+    public TextField getContactAddress(){
+        return this.contactAddress;
     }
 
     public Button getDeleteButton() {
