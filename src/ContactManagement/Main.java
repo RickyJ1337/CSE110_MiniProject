@@ -20,75 +20,80 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-class Task extends HBox {
+class Contact extends HBox {
 
     private Label index;
-    private TextField taskName;
+    private TextField contactName;
+    private TextField contactPhoneNo;
+    private TextField contactAddress;
     private Button deleteButton;
     private Button saveButton;
-    private Button editButton;
+    //private Button editButton;
 
-    private boolean markedDone;
+    //private boolean editing;
 
-    Task() {
-        this.setPrefSize(500, 20); // sets size of task
-        this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // sets background color of task
-        markedDone = false;
+    Contact() {
+        this.setPrefSize(500, 20); // sets size of contact
+        this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // sets background color of contact
 
         index = new Label();
         index.setText(""); // create index label
         index.setPrefSize(40, 20); // set size of Index label
         index.setTextAlignment(TextAlignment.CENTER); // Set alignment of index label
-        index.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the task
-        this.getChildren().add(index); // add index label to task
+        index.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the contact
+        this.getChildren().add(index); // add index label to contact
 
-        taskName = new TextField(); // create task name text field
-        taskName.setPrefSize(380, 20); // set size of text field
-        taskName.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
+        contactName = new TextField(); // create contact name text field
+        //TODO: adjust size later
+        contactName.setPrefSize(380, 20); // set size of text field
+        contactName.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
         index.setTextAlignment(TextAlignment.LEFT); // set alignment of text field
-        taskName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
-        this.getChildren().add(taskName); // add textlabel to task
+        contactName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
+        this.getChildren().add(contactName); // add textlabel to contact
 
-        deleteButton = new Button("Delete"); // creates a button for marking the task as done
+        deleteButton = new Button("Delete"); // creates a button for deleting the contact
         deleteButton.setPrefSize(100, 20);
         deleteButton.setPrefHeight(Double.MAX_VALUE);
         deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
-        saveButton = new Button("Save"); // creates a button for marking the task as done
+        saveButton = new Button("Save"); // creates a button for saving the contact info
         saveButton.setPrefSize(100, 20);
         saveButton.setPrefHeight(Double.MAX_VALUE);
         saveButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
 
-        editButton = new Button("Edit"); // creates a button for marking the task as done
+        /* editButton = new Button("Edit"); // creates a button for editting the contact info
         editButton.setPrefSize(100, 20);
         editButton.setPrefHeight(Double.MAX_VALUE);
         editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+        */
 
-        this.getChildren().addAll(editButton, deleteButton, saveButton);
+        this.getChildren().addAll(deleteButton, saveButton); //removed edit button
     }
 
-    public void setTaskIndex(int num) {
+    public void setContactIndex(int num) {
         this.index.setText(num + ""); // num to String
-        this.taskName.setPromptText("Contact " + num);
+        this.contactName.setPromptText("Contact " + num);
     }
 
-    public TextField getTaskName() {
-        return this.taskName;
+    public TextField getContactName() {
+        return this.contactName;
     }
 
-    public Button getDoneButton() {
+    public Button getDeleteButton() {
         return this.deleteButton;
     }
 
-    public boolean isMarkedDone() {
-        return this.markedDone;
+    /* public boolean isEditing() {
+        return this.editing;
     }
+    */
 
     /*
      * Used ChatGPT 3.5 to generate code structure using this prompt:
      * one button that does one action, and then when the same button is pressed again a different action happens
      */
-    public void toggleDone() {
+    
+    /*  public void toggleDone() {
         if(!markedDone) {
             this.setStyle("-fx-border-color: #000000; -fx-border-width: 0; -fx-font-weight: bold;"); // remove border of task
             for (int i = 0; i < this.getChildren().size(); i++) {
@@ -104,61 +109,35 @@ class Task extends HBox {
         markedDone = !markedDone;
         
     }
+    */ 
 }
 
-class TaskList extends VBox {
+class ContactList extends VBox {
 
-    TaskList() {
-        this.setSpacing(5); // sets spacing between tasks
+    ContactList() {
+        this.setSpacing(5); // sets spacing between contacts
         this.setPrefSize(500, 560);
         this.setStyle("-fx-background-color: #F0F8FF;");
     }
 
-    public void updateTaskIndices() {
+    public void updateContactIndices() {
         int index = 1;
         for (int i = 0; i < this.getChildren().size(); i++) {
-            if (this.getChildren().get(i) instanceof Task) {
-                ((Task) this.getChildren().get(i)).setTaskIndex(index);
+            if (this.getChildren().get(i) instanceof Contact) {
+                ((Contact) this.getChildren().get(i)).setContactIndex(index);
                 index++;
             }
         }
     }
 
+    /*
     public void removeCompletedTasks() {
         this.getChildren().removeIf(task -> task instanceof Task && ((Task) task).isMarkedDone());
-        this.updateTaskIndices();
+        this.updateContactIndices();
     }
+    */
 
-    // TODO: Complete this method
-    /*
-     * Load tasks from a file called "tasks.txt"
-     * Add the tasks to the children of tasklist component
-     */
-    public void loadTasks() {
-        // hint 1: use try-catch block
-        // hint 2: use BufferedReader and FileReader
-        // hint 3: task.getTaskName().setText() sets the text of the task
-        try {
-            BufferedReader input = new BufferedReader(new FileReader("tasks.txt"));
-            String text = input.readLine();
-            // while input is not at end of file
-            while (text != null) {
-                Task task = new Task();
-                task.getTaskName().setText(text);
-                this.getChildren().add(task);
-                text = input.readLine();
-            }
-            input.close(); 
-            updateTaskIndices();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // TODO: Complete this method
-    /*
-     * Save tasks to a file called "tasks.txt"
-     */
+    //TODO: save the contacts to a CSV file
     public void saveTasks() {
         // hint 1: use try-catch block
         // hint 2: use FileWriter
@@ -166,10 +145,10 @@ class TaskList extends VBox {
         try {
             FileWriter writeTask = new FileWriter("tasks.txt", false);
             for (int i = 0; i < this.getChildren().size(); i++) {
-                if (this.getChildren().get(i) instanceof Task) {
-                    Task task = (Task) this.getChildren().get(i);
+                if (this.getChildren().get(i) instanceof Contact) {
+                    Contact task = (Contact) this.getChildren().get(i);
                     //getTaskName().getText() gives the task name
-                    writeTask.write(task.getTaskName().getText() + "\n");
+                    writeTask.write(task.getContactName().getText() + "\n");
                 }
             }
             writeTask.close();
@@ -186,33 +165,30 @@ class TaskList extends VBox {
         }
     }
 
-    // TODO: Complete this method
-    /*
-     * Sort the tasks lexicographically
-     */
+    // TODO: Sort contacts 
     public void sortTasks() {
         // hint 1: this.getChildren() gets the list of tasks
         // hint 2: Collections.sort() can be used to sort the tasks
         // hint 3: task.getTaskName().setText() sets the text of the task
-        ArrayList<Task> taskList = new ArrayList<Task>();
+        ArrayList<Contact> contactList = new ArrayList<Contact>();
         for (int i = 0; i < this.getChildren().size(); i++) {
-            if (this.getChildren().get(i) instanceof Task) {
-                taskList.add((Task)this.getChildren().get(i));
+            if (this.getChildren().get(i) instanceof Contact) {
+                contactList.add((Contact)this.getChildren().get(i));
             }
         }
         /*
          *  code generated from chatGPT 3.5 using the prompt 
          *  sort tasks in a to-do-list lexicographically in java
          */ 
-        Collections.sort(taskList, new Comparator<Task>() {
-            public int compare(Task task1, Task task2) {
-                String taskString1 = task1.getTaskName().getText();
-                String taskString2 = task2.getTaskName().getText();
-                return taskString1.compareToIgnoreCase(taskString2);
+        Collections.sort(contactList, new Comparator<Contact>() {
+            public int compare(Contact contact1, Contact contact2) {
+                String contactString1 = contact1.getContactName().getText();
+                String contactString2 = contact2.getContactName().getText();
+                return contactString1.compareToIgnoreCase(contactString2);
             }
         });
-        this.getChildren().setAll(taskList);
-        updateTaskIndices();
+        this.getChildren().setAll(contactList);
+        updateContactIndices();
     }
 }
 
@@ -220,9 +196,6 @@ class Footer extends HBox {
 
     private Button addButton;
     //private Button clearButton;
-    // TODO: Add a button called "loadButton" to load tasks from file
-    // TODO: Add a button called "saveButton" to save tasks to a file
-    // TODO: Add a button called "sortButton" to sort the tasks lexicographically
     //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
@@ -245,7 +218,6 @@ class Footer extends HBox {
         this.getChildren().addAll(addButton); // adding buttons to footer
         this.setAlignment(Pos.CENTER); // aligning the buttons to center
 
-        // TODO: Create loadButton, saveButton and sortButton to the footer
         /* 
         loadButton = new Button("Load Tasks");
         loadButton.setStyle(defaultButtonStyle);
@@ -298,7 +270,7 @@ class AppFrame extends BorderPane{
 
     private Header header;
     private Footer footer;
-    private TaskList taskList;
+    private ContactList contactList;
 
     private Button addButton;
     //private Button clearButton;
@@ -312,16 +284,12 @@ class AppFrame extends BorderPane{
         header = new Header();
 
         // Create a tasklist Object to hold the tasks
-        taskList = new TaskList();
+        contactList = new ContactList();
         
         // Initialise the Footer Object
         footer = new Footer();
 
-        // TODO: Add a Scroller to the Task List
-        // hint 1: ScrollPane() is the Pane Layout used to add a scroller - it will take the tasklist as a parameter
-        // hint 2: setFitToWidth, and setFitToHeight attributes are used for setting width and height
-        // hint 3: The center of the AppFrame layout should be the scroller window instead  of tasklist
-        ScrollPane scroller = new ScrollPane(taskList);
+        ScrollPane scroller = new ScrollPane(contactList);
         scroller.setFitToWidth(true);
         scroller.setFitToHeight(true);
 
@@ -349,15 +317,12 @@ class AppFrame extends BorderPane{
         // Add button functionality
         addButton.setOnAction(e -> {
             // Create a new task
-            Task task = new Task();
+            Contact contact = new Contact();
             // Add task to tasklist
-            taskList.getChildren().add(task);
-            // Add doneButtonToggle to the Done button
-            Button doneButton = task.getDoneButton();
-            doneButton.setOnAction(e1 -> task.toggleDone());
+            contactList.getChildren().add(contact);
             
             // Update task indices
-            taskList.updateTaskIndices();
+            contactList.updateContactIndices();
         });
         
         // Clear finished tasks
@@ -378,11 +343,11 @@ class AppFrame extends BorderPane{
         });
         */
         saveButton.setOnAction(e -> {
-            taskList.saveTasks();
+            contactList.saveTasks();
         });
 
         sortButton.setOnAction(e -> {
-            taskList.sortTasks();
+            contactList.sortTasks();
         });
     }
 }
