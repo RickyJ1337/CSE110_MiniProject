@@ -65,28 +65,30 @@ class Contact extends HBox {
 
         contactName = new TextField(); // create contact name text field
         //TODO: adjust size later
-        contactName.setPrefSize(100, 20); // set size of text field
+        contactName.setPrefSize(150, 20); // set size of text field
         contactName.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
         index.setTextAlignment(TextAlignment.LEFT); // set alignment of text field
         contactName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(contactName); // add textlabel to contact
 
         contactPhoneNo = new TextField();
-        contactPhoneNo.setPrefSize(100, 20);
+        contactPhoneNo.setPrefSize(150, 20);
         contactPhoneNo.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
         contactPhoneNo.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(contactPhoneNo);
 
         contactAddress = new TextField();
-        contactAddress.setPrefSize(100, 20);
+        contactAddress.setPrefSize(150, 20);
         contactAddress.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
         contactAddress.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(contactAddress);
 
         deleteButton = new Button("Delete"); // creates a button for deleting the contact
-        deleteButton.setPrefSize(50, 20);
+        deleteButton.setPrefSize(100, 20);
         deleteButton.setPrefHeight(Double.MAX_VALUE);
         deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+
+        
 
         /*
         saveButton = new Button("Save"); // creates a button for saving the contact info
@@ -161,9 +163,9 @@ class Contact extends HBox {
         }
         }
         markedDone = !markedDone;
-        
     }
-    */ 
+    */
+
     private void uploadImage() {
         chooseImage.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = chooseImage.showOpenDialog(imageStage);
