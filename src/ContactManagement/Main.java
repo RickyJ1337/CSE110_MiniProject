@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
@@ -34,7 +35,8 @@ class Contact extends HBox {
     private TextField contactName;
     private TextField contactPhoneNo;
     private TextField contactAddress;
-    private Button deleteButton;
+    //private Button deleteButton;
+    private CheckBox selectDelete;
     private Button uploadButton;
     private ImageView contactImageView;
     private FileChooser chooseImage;
@@ -84,12 +86,16 @@ class Contact extends HBox {
         contactAddress.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(contactAddress);
 
+        /*
         deleteButton = new Button("Delete"); // creates a button for deleting the contact
         deleteButton.setPrefSize(100, 20);
         deleteButton.setPrefHeight(Double.MAX_VALUE);
         deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
+        */
 
-        
+        selectDelete = new CheckBox();
+        selectDelete.setPrefSize(10, 10);
+        selectDelete.setPrefHeight(Double.MAX_VALUE);
 
         /*
         saveButton = new Button("Save"); // creates a button for saving the contact info
@@ -103,7 +109,7 @@ class Contact extends HBox {
         editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
         */
 
-        this.getChildren().addAll(uploadButton, deleteButton); //removed edit button
+        this.getChildren().addAll(selectDelete, uploadButton); //removed edit button
     }
 
     public void setContactIndex(int num) {
@@ -133,8 +139,8 @@ class Contact extends HBox {
         return this.contactAddress;
     }
 
-    public Button getDeleteButton() {
-        return this.deleteButton;
+    public CheckBox getDeleteCheckbox() {
+        return this.selectDelete;
     }
 
     public Button getUploadButton() {
@@ -144,6 +150,10 @@ class Contact extends HBox {
         return this.editing;
     }
     */
+
+    public boolean isChecked() {
+        return this.selectDelete.isSelected();
+    }
 
     /*
      * Used ChatGPT 3.5 to generate code structure using this prompt:
@@ -209,6 +219,11 @@ class ContactList extends VBox {
     }
     */
 
+    public void deleteCheckedContacts() {
+        this.getChildren().removeIf(contact -> contact instanceof Contact && ((Contact) contact).isChecked());
+        this.updateContactIndices();
+    }
+
     //TODO: save the contacts to a CSV file
     public void saveTasks() {
         // hint 1: use try-catch block
@@ -271,6 +286,7 @@ class Footer extends HBox {
     //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
+    private Button deleteButton;
 
 
     Footer() {
@@ -298,7 +314,9 @@ class Footer extends HBox {
         saveButton.setStyle(defaultButtonStyle);
         sortButton = new Button("Sort Contacts (By Name)");
         sortButton.setStyle(defaultButtonStyle);
-        this.getChildren().addAll(saveButton, sortButton);
+        deleteButton = new Button("Delete Checked Contacts");
+        deleteButton.setStyle(defaultButtonStyle);
+        this.getChildren().addAll(saveButton, sortButton, deleteButton);
         this.setAlignment(Pos.CENTER);
     }
 
@@ -320,6 +338,10 @@ class Footer extends HBox {
 
     public Button getSortButton() {
         return sortButton;
+    }
+
+    public Button getDeleteButton() {
+        return deleteButton;
     }
     // TODO: Add getters for loadButton, saveButton and sortButton
 }
@@ -379,6 +401,7 @@ class AppFrame extends BorderPane{
         //loadButton = footer.getLoadButton();
         saveButton = footer.getSaveButton();
         sortButton = footer.getSortButton();
+        deleteButton = footer.getDeleteButton();
 
         // Call Event Listeners for the Buttons
         addListeners();
@@ -398,6 +421,10 @@ class AppFrame extends BorderPane{
             contactList.updateContactIndices();
         });
         
+        deleteButton.setOnAction(e -> {
+            contactList.deleteCheckedContacts();
+        });
+
         // Clear finished tasks
         /* 
         clearButton.setOnAction(e -> {
