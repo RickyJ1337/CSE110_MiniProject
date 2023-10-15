@@ -62,6 +62,7 @@ class Contact extends HBox {
         uploadButton.setOnAction(e -> {
             this.uploadImage();
         });
+        this.getChildren().add(contactImageView);
 
         contactName = new TextField(); // create contact name text field
         //TODO: adjust size later
@@ -167,6 +168,7 @@ class Contact extends HBox {
     */
 
     private void uploadImage() {
+        chooseImage = new FileChooser();
         chooseImage.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = chooseImage.showOpenDialog(imageStage);
         if (selectedFile != null) {
@@ -174,9 +176,11 @@ class Contact extends HBox {
 
             // Resize the window to fit the image
             contactImageView.setImage(image);
-            imageStage.setWidth(image.getWidth() + 100);
-            imageStage.setHeight(image.getHeight() + 100);
+            contactImageView.setFitHeight(75);
+            contactImageView.setFitWidth(75);
         }
+        //VBox imageBox = new VBox(contactImageView);
+        //imageBox.setAlignment(Pos.CENTER_LEFT);
     }
 }
 
