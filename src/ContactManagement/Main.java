@@ -225,27 +225,22 @@ class ContactList extends VBox {
     }
 
     //TODO: save the contacts to a CSV file
-    public void saveTasks() {
+    public void saveContacts() {
         // hint 1: use try-catch block
         // hint 2: use FileWriter
         // hint 3: this.getChildren() gets the list of tasks
         try {
-            FileWriter writeTask = new FileWriter("tasks.txt", false);
+            FileWriter writeContact = new FileWriter("contacts.csv", false);
             for (int i = 0; i < this.getChildren().size(); i++) {
                 if (this.getChildren().get(i) instanceof Contact) {
-                    Contact task = (Contact) this.getChildren().get(i);
+                    Contact contact = (Contact) this.getChildren().get(i);
                     //getTaskName().getText() gives the task name
-                    writeTask.write(task.getContactName().getText() + "\n");
+                    writeContact.write(contact.getContactName().getText() + ", ");
+                    writeContact.write(contact.getContactPhoneNo().getText() + ", ");
+                    writeContact.write(contact.getContactAddress().getText() + "\n");
                 }
             }
-            writeTask.close();
-        /* Bugs/Issues:
-         * toString turns the node into a string representation of the memory address
-         * loadTasks only loads one task, big problem when saving more than one task
-         * Have not finished sortTasks
-         * Need to adjust loadTasks action 
-         * to provide proper Done button functionality from exercise 2
-         */
+            writeContact.close();
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -253,7 +248,7 @@ class ContactList extends VBox {
     }
 
     // TODO: Sort contacts 
-    public void sortTasks() {
+    public void sortContacts() {
         // hint 1: this.getChildren() gets the list of tasks
         // hint 2: Collections.sort() can be used to sort the tasks
         // hint 3: task.getTaskName().setText() sets the text of the task
@@ -370,7 +365,6 @@ class AppFrame extends BorderPane{
     //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
-    private Button uploadButton;
     private Button deleteButton;
 
     AppFrame()
@@ -443,11 +437,11 @@ class AppFrame extends BorderPane{
         });
         */
         saveButton.setOnAction(e -> {
-            contactList.saveTasks();
+            contactList.saveContacts();
         });
 
         sortButton.setOnAction(e -> {
-            contactList.sortTasks();
+            contactList.sortContacts();
         });
 
         /*
