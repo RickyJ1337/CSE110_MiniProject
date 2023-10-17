@@ -35,16 +35,11 @@ class Contact extends HBox {
     private TextField contactName;
     private TextField contactPhoneNo;
     private TextField contactAddress;
-    //private Button deleteButton;
     private CheckBox selectDelete;
     private Button uploadButton;
     private ImageView contactImageView;
     private FileChooser chooseImage;
     private Stage imageStage;
-    //private Button saveButton;
-    //private Button editButton;
-
-    //private boolean editing;
 
     Contact() {
         this.setPrefSize(750, 50); // sets size of contact
@@ -86,28 +81,9 @@ class Contact extends HBox {
         contactAddress.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
         this.getChildren().add(contactAddress);
 
-        /*
-        deleteButton = new Button("Delete"); // creates a button for deleting the contact
-        deleteButton.setPrefSize(100, 20);
-        deleteButton.setPrefHeight(Double.MAX_VALUE);
-        deleteButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
-        */
-
         selectDelete = new CheckBox();
         selectDelete.setPrefSize(10, 10);
         selectDelete.setPrefHeight(Double.MAX_VALUE);
-
-        /*
-        saveButton = new Button("Save"); // creates a button for saving the contact info
-        saveButton.setPrefSize(100, 20);
-        saveButton.setPrefHeight(Double.MAX_VALUE);
-        saveButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
-
-        editButton = new Button("Edit"); // creates a button for editting the contact info
-        editButton.setPrefSize(100, 20);
-        editButton.setPrefHeight(Double.MAX_VALUE);
-        editButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
-        */
 
         this.getChildren().addAll(selectDelete, uploadButton); //removed edit button
     }
@@ -146,36 +122,10 @@ class Contact extends HBox {
     public Button getUploadButton() {
         return this.uploadButton;
     }
-    /* public boolean isEditing() {
-        return this.editing;
-    }
-    */
 
     public boolean isChecked() {
         return this.selectDelete.isSelected();
     }
-
-    /*
-     * Used ChatGPT 3.5 to generate code structure using this prompt:
-     * one button that does one action, and then when the same button is pressed again a different action happens
-     */
-    
-    /*  public void toggleDone() {
-        if(!markedDone) {
-            this.setStyle("-fx-border-color: #000000; -fx-border-width: 0; -fx-font-weight: bold;"); // remove border of task
-            for (int i = 0; i < this.getChildren().size(); i++) {
-                this.getChildren().get(i).setStyle("-fx-background-color: #BCE29E; -fx-border-width: 0;"); // change color of task to green
-            }
-        }
-        else {
-            this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // adds border back
-            for (int i = 0; i < this.getChildren().size(); i++) {
-                this.getChildren().get(i).setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // resets color of task to gray
-        }
-        }
-        markedDone = !markedDone;
-    }
-    */
 
     private void uploadImage() {
         chooseImage = new FileChooser();
@@ -212,13 +162,6 @@ class ContactList extends VBox {
         }
     }
 
-    /*
-    public void removeCompletedTasks() {
-        this.getChildren().removeIf(task -> task instanceof Task && ((Task) task).isMarkedDone());
-        this.updateContactIndices();
-    }
-    */
-
     public void deleteCheckedContacts() {
         this.getChildren().removeIf(contact -> contact instanceof Contact && ((Contact) contact).isChecked());
         this.updateContactIndices();
@@ -231,6 +174,7 @@ class ContactList extends VBox {
         // hint 3: this.getChildren() gets the list of tasks
         try {
             FileWriter writeContact = new FileWriter("contacts.csv", false);
+            writeContact.write("Contact Name, " + "Phone Number, " + "Address\n");
             for (int i = 0; i < this.getChildren().size(); i++) {
                 if (this.getChildren().get(i) instanceof Contact) {
                     Contact contact = (Contact) this.getChildren().get(i);
@@ -277,8 +221,6 @@ class ContactList extends VBox {
 class Footer extends HBox {
 
     private Button addButton;
-    //private Button clearButton;
-    //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
     private Button deleteButton;
@@ -294,17 +236,10 @@ class Footer extends HBox {
 
         addButton = new Button("Add Contact"); // text displayed on add button
         addButton.setStyle(defaultButtonStyle); // styling the button
-        /* 
-        clearButton = new Button("Clear finished"); // text displayed on clear tasks button
-        clearButton.setStyle(defaultButtonStyle);
-        */
+
         this.getChildren().addAll(addButton); // adding buttons to footer
         this.setAlignment(Pos.CENTER); // aligning the buttons to center
 
-        /* 
-        loadButton = new Button("Load Tasks");
-        loadButton.setStyle(defaultButtonStyle);
-        */
         saveButton = new Button("Save Contacts");
         saveButton.setStyle(defaultButtonStyle);
         sortButton = new Button("Sort Contacts (By Name)");
@@ -318,15 +253,7 @@ class Footer extends HBox {
     public Button getAddButton() {
         return addButton;
     }
-    /* 
-    public Button getClearButton() {
-        return clearButton;
-    }
 
-    public Button getLoadButton() {
-        return loadButton;
-    }
-    */
     public Button getSaveButton() {
         return saveButton;
     }
@@ -338,7 +265,7 @@ class Footer extends HBox {
     public Button getDeleteButton() {
         return deleteButton;
     }
-    // TODO: Add getters for loadButton, saveButton and sortButton
+
 }
 
 class Header extends HBox {
@@ -359,10 +286,7 @@ class AppFrame extends BorderPane{
     private Header header;
     private Footer footer;
     private ContactList contactList;
-    //private Contact contact;
     private Button addButton;
-    //private Button clearButton;
-    //private Button loadButton;
     private Button saveButton;
     private Button sortButton;
     private Button deleteButton;
@@ -391,8 +315,6 @@ class AppFrame extends BorderPane{
 
         // Initialise Button Variables through the getters in Footer
         addButton = footer.getAddButton();
-        //clearButton = footer.getClearButton();
-        //loadButton = footer.getLoadButton();
         saveButton = footer.getSaveButton();
         sortButton = footer.getSortButton();
         deleteButton = footer.getDeleteButton();
@@ -419,23 +341,6 @@ class AppFrame extends BorderPane{
             contactList.deleteCheckedContacts();
         });
 
-        // Clear finished tasks
-        /* 
-        clearButton.setOnAction(e -> {
-            taskList.removeCompletedTasks();
-        });
-
-        loadButton.setOnAction(e -> {
-            taskList.loadTasks();
-            for (int i = 0; i < taskList.getChildren().size(); i++) {
-                if (taskList.getChildren().get(i) instanceof Task) {
-                    Task task = (Task) taskList.getChildren().get(i);
-                    Button doneButton = task.getDoneButton();
-                    doneButton.setOnAction(e1 -> task.toggleDone());
-                }
-            }
-        });
-        */
         saveButton.setOnAction(e -> {
             contactList.saveContacts();
         });
@@ -443,16 +348,6 @@ class AppFrame extends BorderPane{
         sortButton.setOnAction(e -> {
             contactList.sortContacts();
         });
-
-        /*
-        uploadButton.setOnAction(e -> {
-            contact.uploadImage();
-        });
-         
-        deleteButton.setOnAction(e -> {
-            contactList.deleteContact();
-        });
-        */
     }
 }
 
